@@ -3,6 +3,7 @@ This file contains tools for handling text documents and extracting features fro
 """
 import zipfile
 import os
+from xml.etree import cElementTree as ET
 
 
 def parse_zip_file(path, handler):
@@ -35,3 +36,27 @@ def parse_zip_file(path, handler):
             with zip.open(file, 'r') as file_handle:
                 text = file_handle.read().decode('utf-8')
                 handler(file, text)
+
+
+def extract_text_from_xml(xml_string):
+    """
+    Extract text from an XML file.
+
+    Parameters
+    ----------
+    xml_string : str
+        XML formatted string to extract text from.
+
+    Returns
+    -------
+    str
+        Text found in XML.
+    """
+    #def text_in_node
+    tree = ET.fromstring(xml_string)
+    for child in tree:
+        if child.text is not None:
+            return False
+
+
+extract_text_from_xml('<archive><page>1</page><page><subnode>2</subnode></page></archive>')
