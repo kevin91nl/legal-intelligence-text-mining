@@ -1,5 +1,6 @@
 import unittest
 import shutil
+from xml.etree import cElementTree
 from textmining.extract import *
 
 
@@ -61,6 +62,17 @@ class TestTools(unittest.TestCase):
         with self.assertRaises(zipfile.BadZipfile):
             # A directory (is not a valid zip file)
             parse_zip_file('empty_folder', self.handle_zip_file)
+
+    def test_extract_text_from_xml(self):
+        # Test whether it is possible to extract text from an XML node
+        xml = '<archive><page>page 1</page><page>page 2<subnode>node 1</subnode></page></archive>'
+        node = cElementTree.fromstring(xml)
+        # First text is simply without any separator
+        text1 = extract_text_from_xml(node, "")
+        self.assertEqual(text1, 'page 1page 2node 1')
+        # The second text has a space as separator
+        text2 = extract_text_from_xml(node, " ")
+        self.assertEqual(text2, 'page 1 page 2 node 1')
 
 
 if __name__ == '__main__':

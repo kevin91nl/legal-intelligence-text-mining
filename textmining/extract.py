@@ -3,7 +3,6 @@ This file contains tools for handling text documents and extracting features fro
 """
 import zipfile
 import os
-from xml.etree import cElementTree as ET
 
 
 def parse_zip_file(path, handler):
@@ -31,32 +30,35 @@ def parse_zip_file(path, handler):
     """
     if not os.path.exists(path) or os.path.isdir(path) or not zipfile.is_zipfile(path):
         raise zipfile.BadZipfile
-    with zipfile.ZipFile(path, 'r') as zip:
-        for file in zip.namelist():
-            with zip.open(file, 'r') as file_handle:
+    with zipfile.ZipFile(path, 'r') as zip_handle:
+        for file in zip_handle.namelist():
+            with zip_handle.open(file, 'r') as file_handle:
                 text = file_handle.read().decode('utf-8')
                 handler(file, text)
 
 
-def extract_text_from_xml(xml_string):
+def extract_text_from_xml(xml_node, separator="\n"):
     """
-    Extract text from an XML file.
+    Extract text from an XML node.
 
     Parameters
     ----------
-    xml_string : str
-        XML formatted string to extract text from.
+    xml_node : xml.etree.ElementTree
+        An XML node.
+    separator : Optional[str]
+        String that separates texts found in subtrees from each other.
 
     Returns
     -------
     str
-        Text found in XML.
+        Found text.
     """
-    #def text_in_node
-    tree = ET.fromstring(xml_string)
-    for child in tree:
-        if child.text is not None:
-            return False
-
-
-extract_text_from_xml('<archive><page>1</page><page><subnode>2</subnode></page></archive>')
+    text = ""
+    main_text = xml_node.text
+    if main_text is not None:
+        text += main_text + separator
+    for child in xml_node:
+        subtext = extract_text_from_xml(child, separator=separator)
+        if subtext is not None:
+            text += subtext + separator
+    return text.strip(separator)
