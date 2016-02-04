@@ -1,6 +1,7 @@
 """
 This file builds upon the Text Mining tools for extracting and handling Legal Intelligence specific information.
 """
-from textmining.tools import *
+from textmining.extract import *
 
-test1234()
+def gaaf():
+    print('1243')

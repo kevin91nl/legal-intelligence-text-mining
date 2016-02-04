@@ -1,5 +1,5 @@
 import unittest
-from textmining.tools import *
+from textmining.extract import *
 
 
 class TestTools(unittest.TestCase):
