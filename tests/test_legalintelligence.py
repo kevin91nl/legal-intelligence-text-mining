@@ -1,5 +1,5 @@
 import unittest
-from legal_intelligence.tools import *
+from legalintelligence.tools import *
 
 
 class TestExtensions(unittest.TestCase):

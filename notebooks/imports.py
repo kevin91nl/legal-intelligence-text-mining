@@ -10,4 +10,4 @@ sys.path.append(basedir)
 
 # Load relative modules
 from textmining.tools import *
-from legal_intelligence.tools import *
+from legalintelligence.tools import *
