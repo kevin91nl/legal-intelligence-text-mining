@@ -2,3 +2,7 @@
 
 # Legal Intelligence
 A Text Classification project for the company Legal Intelligence.
+
+# Contributions
+A list of all authors and contributions:
+- Kevin Jacobs
