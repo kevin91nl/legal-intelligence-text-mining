@@ -1,6 +1,7 @@
 # Load required modules
 import os
 import sys
+import pickle
 
 # Add the parent directory to the path so the modules in here can be used
 cwd = os.getcwd()
